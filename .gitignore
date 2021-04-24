@@ -1,3 +1,5 @@
+dubbed-zomato-7a6ca-firebase-admin-key.json
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
@@ -124,7 +126,6 @@ venv.bak/
 .mypy_cache/
 .dmypy.json
 dmypy.json
-dubbed-zomato-7a6ca-firebase-admin-key.json
 
 # Pyre type checker
 .pyre/
