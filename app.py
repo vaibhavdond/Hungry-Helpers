@@ -44,7 +44,6 @@ def search_restaurant():
     restaurants_list = []
     for val in arr:
         restaurants_list.append(val.to_dict())
-    return restaurants_list
     return jsonify({"Response" : 200, "Restaurants_list" : restaurants_list})
 
 if __name__ == '__main__':
