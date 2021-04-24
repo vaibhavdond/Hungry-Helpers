@@ -35,5 +35,17 @@ def add_restaurant():
     store.collection("RESTAURANTS").add(dikt)
     return jsonify({"Response" : 200})
 
+
+@app.route('/search_restaurant/by_id', methods=['POST'])
+def search_restaurant():
+    data = request.get_json(force=True)
+    restaurant_id = data.get("restaurant_id")
+    arr = store.collection("RESTAURANTS").where("restaurant_id","==",restaurant_id).stream()
+    restaurants_list = []
+    for val in arr:
+        restaurants_list.append(val.to_dict())
+    return restaurants_list
+    return jsonify({"Response" : 200, "Restaurants_list" : restaurants_list})
+
 if __name__ == '__main__':
     app.run(debug=False)
