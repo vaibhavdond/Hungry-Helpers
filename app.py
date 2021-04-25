@@ -52,8 +52,8 @@ def search_restaurant():
 @app.route('/search_restaurant/by_coordinates', methods=['POST'])
 def search_restaurant():
     data = request.get_json(force=True)
-    mylat = data.get("latitude")
-    mylon = data.get("longitude")
+    mylat = randians(data.get("latitude"))
+    mylon = radians(data.get("longitude"))
     r = data.get("range")
 
     # approximate radius of earth in km
