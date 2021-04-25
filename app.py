@@ -76,8 +76,8 @@ def search_restaurant():
 
             if(distance<=r):
                 restaurants_near_me.append(rdict)
-        except:
-            print("Someone had ill formated the data while entering in the sysyem")
+        except Exception as e:
+            print(e)
     return jsonify({"Response" : 200, "Restaurants_near_me" : restaurants_near_me})
 
 if __name__ == '__main__':
