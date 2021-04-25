@@ -50,7 +50,7 @@ def search_restaurant():
     return jsonify({"Response" : 200, "Restaurants_list" : restaurants_list})
 
 @app.route('/search_restaurant/by_coordinates', methods=['POST'])
-def search_restaurant():
+def search_restaurant_by_coordinates():
     data = request.get_json(force=True)
     mylat = randians(data.get("latitude"))
     mylon = radians(data.get("longitude"))
