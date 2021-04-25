@@ -62,19 +62,22 @@ def search_restaurant():
     arr = store.collection("RESTAURANTS").stream()
     restaurants_near_me = []
     for restaurant in arr:
-        rdict = restaurant.to_dict()
-        rlat = radians(rdict.get("location").get("latitude"))
-        rlon = radians(rdict.get("location").get("longitude"))
+        try:
+            rdict = restaurant.to_dict()
+            rlat = radians(rdict.get("location").get("latitude"))
+            rlon = radians(rdict.get("location").get("longitude"))
 
-        dlon = rlon - mylon
-        dlat = rlat - mylat
+            dlon = rlon - mylon
+            dlat = rlat - mylat
 
-        a = sin(dlat / 2)**2 + cos(mylat) * cos(rlat) * sin(dlon / 2)**2
-        c = 2 * atan2(sqrt(a), sqrt(1 - a))
-        distance = R * c
+            a = sin(dlat / 2)**2 + cos(mylat) * cos(rlat) * sin(dlon / 2)**2
+            c = 2 * atan2(sqrt(a), sqrt(1 - a))
+            distance = R * c
 
-        if(distance<=r):
-            restaurants_near_me.append(rdict)
+            if(distance<=r):
+                restaurants_near_me.append(rdict)
+        except:
+            print("Someone had ill formated the data while entering in the sysyem")
     return jsonify({"Response" : 200, "Restaurants_near_me" : restaurants_near_me})
 
 if __name__ == '__main__':
