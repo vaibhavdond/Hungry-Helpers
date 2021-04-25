@@ -5,7 +5,6 @@ from firebase_admin import firestore
 import flask
 from flask import abort, jsonify, request, redirect
 
-import math
 from math import sin, cos, sqrt, atan2, radians
 
 import datetime
@@ -52,8 +51,8 @@ def search_restaurant():
 @app.route('/search_restaurant/by_coordinates', methods=['POST'])
 def search_restaurant_by_coordinates():
     data = request.get_json(force=True)
-    mylat = randians(data.get("latitude"))
-    mylon = radians(data.get("longitude"))
+    mylat = data.get("latitude")
+    mylon = data.get("longitude")
     r = data.get("range")
 
     # approximate radius of earth in km
@@ -64,8 +63,13 @@ def search_restaurant_by_coordinates():
     for restaurant in arr:
         try:
             rdict = restaurant.to_dict()
-            rlat = radians(rdict.get("location").get("latitude"))
-            rlon = radians(rdict.get("location").get("longitude"))
+            rlat = rdict.get("location").get("latitude")
+            rlon = rdict.get("location").get("longitude")
+
+            mylat = radians(mylat)
+            mylon = radians(mylon)
+            rlat = radians(rlat)
+            rlon = radians(rlon)
 
             dlon = rlon - mylon
             dlat = rlat - mylat
