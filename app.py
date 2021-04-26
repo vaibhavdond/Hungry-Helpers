@@ -84,5 +84,28 @@ def search_restaurant_by_coordinates():
             print(e)
     return jsonify({"Response" : 200, "Restaurants_near_me" : restaurants_near_me})
 
+@app.route('/create_menu', methods=['POST'])
+def create_menu():
+    data = request.get_json(force=True)
+    dikt = {}
+    dikt["menu_id"] = data.get("menu_id")
+    dikt["restaurant_id"] = data.get("restaurant_id")
+    dikt["menu_items"] = data.get("menu_items")
+    dikt["menu_created_at"] = firestore.SERVER_TIMESTAMP
+
+    store.collection("MENUS").add(dikt)
+    return jsonify({"Response" : 200})
+
+@app.route('/add_item', methods=['POST'])
+def add_item_to_menu():
+    data = request.get_json(force=True)
+    menu_id = data.get("menu_id")
+    menu_item = data.get("menu_item")
+
+    restaurant = list(store.collection("MENUS").where("menu_id","==",menu_id).stream())
+    ref = store.collection("MENUS").document(restaurant[0].id)
+    ref.update({u'menu_items': firestore.ArrayUnion([menu_item])})
+    return jsonify({"Response" : 200})
+
 if __name__ == '__main__':
     app.run(debug=False)
